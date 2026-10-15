@@ -60,5 +60,46 @@
       <p>Els 16 equips participants</p>
     </div>
   </main>
+
+
+<p id="prova-api" style="text-align:center; padding:20px;">
+  Preparant connexió...
+</p>
+
+<script>
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbxXDmZjb8LDNYyxpv-cwKEH36T7DGY29Hk-_iALvateg-jyWL1XGdXLweRMjrFW4J4/exec";
+
+  async function provarConnexio() {
+    const resultat = document.getElementById("prova-api");
+
+    resultat.textContent = "Connectant amb l'API...";
+
+    try {
+      const resposta = await fetch(
+        API_URL + "?taula=Jornades"
+      );
+
+      if (!resposta.ok) {
+        throw new Error("HTTP " + resposta.status);
+      }
+
+      const dades = await resposta.json();
+
+      resultat.textContent =
+        "Connexió correcta! Jornades rebudes: " +
+        dades.total;
+
+    } catch (error) {
+      resultat.textContent =
+        "Error de connexió: " + error.message;
+
+      console.error(error);
+    }
+  }
+
+  provarConnexio();
+</script>
+
 </body>
 </html>

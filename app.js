@@ -9,7 +9,7 @@ const API_URL =
 
 // Dades carregades de Google Sheets
 const dadesApp = {
-  jornades: []
+  jornades: [],
   seus: []
 };
 

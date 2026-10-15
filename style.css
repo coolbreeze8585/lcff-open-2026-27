@@ -157,3 +157,42 @@ nav button.actiu {
     font-size: 17px;
   }
 }
+
+/* CLASSIFICACIÓ */
+
+.taula-classificacio {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 580px;
+  font-size: 0.9rem;
+}
+
+.taula-classificacio th,
+.taula-classificacio td {
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 1px solid #29384f;
+}
+
+.taula-classificacio th {
+  background: #1b2b44;
+  color: #c8d8ef;
+  font-weight: 700;
+}
+
+.taula-classificacio td:nth-child(2),
+.taula-classificacio th:nth-child(2) {
+  text-align: left;
+  min-width: 130px;
+}
+
+.taula-classificacio tbody tr:hover {
+  background: #1b2b44;
+}
+
+.nota-classificacio {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: #aabbd0;
+  line-height: 1.5;
+}

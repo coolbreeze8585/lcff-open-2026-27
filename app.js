@@ -12,7 +12,8 @@ const dadesApp = {
   jornades: [],
   seus: [],
   partits: [],
-  equips: []
+  equips: [],
+  classificacio: []
 };
 
 /**

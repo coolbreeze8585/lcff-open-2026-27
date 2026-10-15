@@ -216,6 +216,89 @@ function mostrarSeus(jornadaID) {
   });
 }
 
+
+function mostrarPartits(seuID) {
+  const contenidor = document.getElementById("contingut");
+  const seu = dadesApp.seus.find(s => s.SeuID === seuID);
+
+  if (!contenidor || !seu) return;
+
+  contenidor.replaceChildren();
+
+  const tornar = document.createElement("button");
+  tornar.type = "button";
+  tornar.className = "card";
+  tornar.textContent = "← Tornar a les seus";
+  tornar.addEventListener("click", () => {
+    mostrarSeus(seu.JornadaID);
+  });
+  contenidor.appendChild(tornar);
+
+  const titol = document.createElement("h2");
+  titol.textContent = seu.NomSeu;
+  contenidor.appendChild(titol);
+
+  const info = document.createElement("p");
+  info.className = "estat";
+  info.textContent =
+    formatData(seu.Data) + " · " + (seu.Camp || "Camp pendent");
+  contenidor.appendChild(info);
+
+  const partits = dadesApp.partits
+    .filter(p => p.SeuID === seuID)
+    .sort((a, b) => String(a.Hora).localeCompare(String(b.Hora)));
+
+  if (partits.length === 0) {
+    const avis = document.createElement("p");
+    avis.className = "estat";
+    avis.textContent = "Encara no hi ha partits programats.";
+    contenidor.appendChild(avis);
+    return;
+  }
+
+  partits.forEach(partit => {
+    const equipA = dadesApp.equips.find(
+      e => e.EquipID === partit.EquipA_ID
+    );
+
+    const equipB = dadesApp.equips.find(
+      e => e.EquipID === partit.EquipB_ID
+    );
+
+    const nomA = equipA?.NomCurt || partit.EquipA_ID;
+    const nomB = equipB?.NomCurt || partit.EquipB_ID;
+
+    const targeta = document.createElement("div");
+    targeta.className = "card";
+
+    const nom = document.createElement("h3");
+    nom.textContent = nomA + " vs " + nomB;
+
+    const detall = document.createElement("p");
+    detall.textContent =
+      (partit.Hora || "Hora pendent") +
+      " · " +
+      (partit.Camp || "Camp pendent");
+
+    targeta.appendChild(nom);
+    targeta.appendChild(detall);
+
+    if (
+      partit.PuntsA !== "" &&
+      partit.PuntsA != null &&
+      partit.PuntsB !== "" &&
+      partit.PuntsB != null
+    ) {
+      const marcador = document.createElement("p");
+      marcador.textContent =
+        "Resultat: " + partit.PuntsA + " - " + partit.PuntsB;
+      targeta.appendChild(marcador);
+    }
+
+    contenidor.appendChild(targeta);
+  });
+}
+
 /**
  * Inicialitza l'aplicació.
  */

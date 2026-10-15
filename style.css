@@ -1,0 +1,159 @@
+
+/* LCFF OPEN 2026-27 */
+/* Estils generals de la PWA */
+
+:root {
+  --fons: #101827;
+  --capcalera: #17243a;
+  --targeta: #1e2d45;
+  --targeta-hover: #293c59;
+  --text: #ffffff;
+  --text-secundari: #b9c7db;
+  --accent: #60a5fa;
+  --vora: #34465f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--fons);
+  color: var(--text);
+}
+
+header {
+  padding: 24px 16px;
+  background: var(--capcalera);
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 26px;
+}
+
+header p {
+  margin-bottom: 0;
+  color: var(--text-secundari);
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px 16px 90px;
+}
+
+h2 {
+  margin: 0 0 20px;
+  font-size: 23px;
+}
+
+.card {
+  display: block;
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 20px;
+  background: var(--targeta);
+  border: 1px solid var(--vora);
+  border-radius: 12px;
+  color: var(--text);
+  text-align: left;
+}
+
+button.card {
+  cursor: pointer;
+  font: inherit;
+}
+
+button.card:hover {
+  background: var(--targeta-hover);
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 19px;
+}
+
+.card p {
+  margin: 0;
+  color: var(--text-secundari);
+}
+
+.card-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.card-fletxa {
+  color: var(--accent);
+  font-size: 24px;
+}
+
+.estat {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-secundari);
+}
+
+.error {
+  color: #fca5a5;
+}
+
+.ocult {
+  display: none !important;
+}
+
+/* Navegació inferior */
+
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 8px;
+  background: var(--capcalera);
+  border-top: 1px solid var(--vora);
+}
+
+nav button {
+  flex: 1;
+  padding: 12px 4px;
+  background: transparent;
+  border: none;
+  color: var(--text-secundari);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+nav button.actiu {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* Adaptació a mòbils */
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 22px;
+  }
+
+  main {
+    padding: 18px 12px 90px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .card h3 {
+    font-size: 17px;
+  }
+}

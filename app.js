@@ -195,9 +195,15 @@ function mostrarSeus(jornadaID) {
       dataAnterior = seu.Data;
     }
 
-    const targeta = document.createElement("div");
+    
+    const targeta = document.createElement("button");
+    targeta.type = "button";
     targeta.className = "card";
-
+    
+    targeta.addEventListener("click", () => {
+      mostrarPartits(seu.SeuID);
+    });
+    
     const nom = document.createElement("h3");
     nom.textContent = seu.NomSeu;
 

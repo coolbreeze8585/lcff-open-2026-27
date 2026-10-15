@@ -196,3 +196,45 @@ nav button.actiu {
   color: #aabbd0;
   line-height: 1.5;
 }
+
+/* MENÚ PRINCIPAL: sota la capçalera */
+
+.menu-principal {
+  position: static;
+  width: 100%;
+  max-width: 900px;
+  margin: 16px auto 20px;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  background: transparent;
+  box-shadow: none;
+}
+
+.menu-principal button {
+  position: static;
+  width: 100%;
+  padding: 13px 8px;
+  border: 1px solid #314563;
+  border-radius: 6px;
+  background: #1d2e49;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.menu-principal button.menu-actiu {
+  background: #345a91;
+  border-color: #527cb6;
+}
+
+.menu-principal button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.menu-principal button:not(:disabled):hover {
+  background: #345a91;
+}

@@ -5,101 +5,25 @@
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#17243a">
+
   <title>LCFF Open 2026-27</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #101827;
-      color: white;
-    }
-    header {
-      padding: 24px;
-      background: #17243a;
-      text-align: center;
-    }
-    h1 {
-      margin: 0;
-      font-size: 26px;
-    }
-    main {
-      padding: 24px;
-      max-width: 900px;
-      margin: auto;
-    }
-    .card {
-      padding: 20px;
-      margin-bottom: 14px;
-      background: #1e2d45;
-      border-radius: 12px;
-    }
-    .card h2 {
-      margin-top: 0;
-    }
-  </style>
+
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
 </head>
+
 <body>
+
   <header>
     <h1>LCFF Open 2026-27</h1>
     <p>Lliga Catalana de Flag Football</p>
   </header>
 
-  <main>
-    <div class="card">
-      <h2>Jornades</h2>
-      <p>Calendari, seus i partits</p>
-    </div>
-
-    <div class="card">
-      <h2>Classificació</h2>
-      <p>Resultats i posicions de la lliga</p>
-    </div>
-
-    <div class="card">
-      <h2>Equips</h2>
-      <p>Els 16 equips participants</p>
-    </div>
+  <main id="contingut">
+    <p class="estat">Preparant l'aplicació...</p>
   </main>
-
-
-<p id="prova-api" style="text-align:center; padding:20px;">
-  Preparant connexió...
-</p>
-
-<script>
-  const API_URL =
-    "https://script.google.com/macros/s/AKfycbxXDmZjb8LDNYyxpv-cwKEH36T7DGY29Hk-_iALvateg-jyWL1XGdXLweRMjrFW4J4/exec";
-
-  async function provarConnexio() {
-    const resultat = document.getElementById("prova-api");
-
-    resultat.textContent = "Connectant amb l'API...";
-
-    try {
-      const resposta = await fetch(
-        API_URL + "?taula=Jornades"
-      );
-
-      if (!resposta.ok) {
-        throw new Error("HTTP " + resposta.status);
-      }
-
-      const dades = await resposta.json();
-
-      resultat.textContent =
-        "Connexió correcta! Jornades rebudes: " +
-        dades.total;
-
-    } catch (error) {
-      resultat.textContent =
-        "Error de connexió: " + error.message;
-
-      console.error(error);
-    }
-  }
-
-  provarConnexio();
-</script>
 
 </body>
 </html>

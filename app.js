@@ -216,19 +216,24 @@ function mostrarSeus(jornadaID) {
 async function iniciarApp() {
   mostrarEstat("Carregant jornades...");
 
-  try {
-    const [jornades, seus] = await Promise.all([
-      consultarAPI("Jornades"),
-      consultarAPI("Seus")
-    ]);
-
-dadesApp.jornades = jornades;
-dadesApp.seus = seus;
+  try {  
+    const [jornades, seus, partits, equips] =
+      await Promise.all([
+        consultarAPI("Jornades"),
+        consultarAPI("Seus"),
+        consultarAPI("Partits"),
+        consultarAPI("Equips")
+      ]);
+    
+    dadesApp.jornades = jornades;
+    dadesApp.seus = seus;
+    dadesApp.partits = partits;
+    dadesApp.equips = equips;
+    
     mostrarJornades();
-
-  } catch (error) {
+      } catch (error) {
+    
     console.error(error);
-
     mostrarEstat(
       "No s'han pogut carregar les jornades.",
       true

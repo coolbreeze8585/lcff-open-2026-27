@@ -322,7 +322,7 @@ async function iniciarApp() {
     dadesApp.equips = equips;
     dadesApp.classificacio = classificacio;
     
-    mostrarJornades();
+    mostrarClassificacio();
       } catch (error) {
     
     console.error(error);
@@ -337,3 +337,50 @@ document.addEventListener(
   "DOMContentLoaded",
   iniciarApp
 );
+
+
+function mostrarClassificacio() {
+  const equips = dadesApp.classificacio;
+
+  const files = equips.map(equip => `
+    <tr>
+      <td>${equip.POS || "–"}</td>
+      <td>${equip.NomCurt || equip.Nom}</td>
+      <td>${equip.PJ}</td>
+      <td>${equip.V}</td>
+      <td>${equip.E}</td>
+      <td>${equip.D}</td>
+      <td>${equip.PF}</td>
+      <td>${equip.PC}</td>
+      <td>${equip.DIF > 0 ? "+" : ""}${equip.DIF}</td>
+    </tr>
+  `).join("");
+
+  const contingut = `
+    <h2>Classificació</h2>
+    <div style="overflow-x: auto;">
+      <table class="taula-classificacio">
+        <thead>
+          <tr>
+            <th>POS</th>
+            <th>Equip</th>
+            <th>PJ</th>
+            <th>V</th>
+            <th>E</th>
+            <th>D</th>
+            <th>PF</th>
+            <th>PC</th>
+            <th>DIF</th>
+          </tr>
+        </thead>
+        <tbody>${files}</tbody>
+      </table>
+    </div>
+    <p class="nota-classificacio">
+      Classificació provisional.
+      Els desempats federatius es resoldran manualment.
+    </p>
+  `;
+
+  document.getElementById("contingut").innerHTML = contingut;
+}

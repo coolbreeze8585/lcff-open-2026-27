@@ -10,6 +10,7 @@ const API_URL =
 // Dades carregades de Google Sheets
 const dadesApp = {
   jornades: []
+  seus: []
 };
 
 /**
@@ -89,7 +90,11 @@ function mostrarJornades() {
     );
 
   jornadesOrdenades.forEach(jornada => {
-    const targeta = document.createElement("div");
+    const targeta = document.createElement("button");
+    targeta.type = "button";
+    targeta.addEventListener("click", () => {
+      mostrarSeus(jornada.JornadaID);
+    });
     targeta.className = "card";
 
     const fila = document.createElement("div");
@@ -145,6 +150,64 @@ function mostrarEstat(missatge, esError = false) {
   contenidor.appendChild(avis);
 }
 
+
+function mostrarSeus(jornadaID) {
+  const contenidor = document.getElementById("contingut");
+  const jornada = dadesApp.jornades.find(
+    j => j.JornadaID === jornadaID
+  );
+
+  if (!contenidor || !jornada) return;
+
+  contenidor.replaceChildren();
+
+  const tornar = document.createElement("button");
+  tornar.textContent = "← Tornar a jornades";
+  tornar.className = "card";
+  tornar.addEventListener("click", mostrarJornades);
+  contenidor.appendChild(tornar);
+
+  const titol = document.createElement("h2");
+  titol.textContent = jornada.Nom;
+  contenidor.appendChild(titol);
+
+  const seus = dadesApp.seus
+    .filter(seu => seu.JornadaID === jornadaID)
+    .sort((a, b) => a.Data.localeCompare(b.Data));
+
+  if (seus.length === 0) {
+    const avis = document.createElement("p");
+    avis.className = "estat";
+    avis.textContent = "Encara no hi ha seus programades.";
+    contenidor.appendChild(avis);
+    return;
+  }
+
+  let dataAnterior = "";
+
+  seus.forEach(seu => {
+    if (seu.Data !== dataAnterior) {
+      const data = document.createElement("h3");
+      data.textContent = formatData(seu.Data);
+      contenidor.appendChild(data);
+      dataAnterior = seu.Data;
+    }
+
+    const targeta = document.createElement("div");
+    targeta.className = "card";
+
+    const nom = document.createElement("h3");
+    nom.textContent = seu.NomSeu;
+
+    const camp = document.createElement("p");
+    camp.textContent = seu.Camp || "Camp pendent";
+
+    targeta.appendChild(nom);
+    targeta.appendChild(camp);
+    contenidor.appendChild(targeta);
+  });
+}
+
 /**
  * Inicialitza l'aplicació.
  */
@@ -152,9 +215,13 @@ async function iniciarApp() {
   mostrarEstat("Carregant jornades...");
 
   try {
-    dadesApp.jornades =
-      await consultarAPI("Jornades");
+    const [jornades, seus] = await Promise.all([
+      consultarAPI("Jornades"),
+      consultarAPI("Seus")
+    ]);
 
+dadesApp.jornades = jornades;
+dadesApp.seus = seus;
     mostrarJornades();
 
   } catch (error) {

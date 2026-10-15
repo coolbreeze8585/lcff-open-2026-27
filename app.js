@@ -307,7 +307,7 @@ async function iniciarApp() {
   mostrarEstat("Carregant jornades...");
 
   try {  
-    const [jornades, seus, partits, equips] =
+    const [jornades, seus, partits, equips, classificacio] =
       await Promise.all([
         consultarAPI("Jornades"),
         consultarAPI("Seus"),

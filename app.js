@@ -312,13 +312,15 @@ async function iniciarApp() {
         consultarAPI("Jornades"),
         consultarAPI("Seus"),
         consultarAPI("Partits"),
-        consultarAPI("Equips")
+        consultarAPI("Equips"),
+        consultarAPI("Classificacio")
       ]);
     
     dadesApp.jornades = jornades;
     dadesApp.seus = seus;
     dadesApp.partits = partits;
     dadesApp.equips = equips;
+    dadesApp.classificacio = classificacio;
     
     mostrarJornades();
       } catch (error) {

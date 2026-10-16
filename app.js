@@ -19,7 +19,7 @@ const dadesApp = {
 /**
  * Consulta una taula de l'API.
  */
-async function consultarAPI(taula) {
+async function consultarAPI(taula) {        
   const url =
     API_URL + "?taula=" + encodeURIComponent(taula);
 
@@ -434,4 +434,93 @@ function activarPestanya(pestanya) {
   if (botoActiu) {
     botoActiu.classList.add("menu-actiu");
   }
+}
+
+function mostrarFitxaEquip(equipID) {
+  const equip = dadesApp.equips.find(
+    e => e.EquipID === equipID
+  );
+
+  if (!equip) {
+    mostrarEstat("No s'ha trobat l'equip.", true);
+    return;
+  }
+
+  const estadistiques = dadesApp.classificacio.find(
+    e => e.EquipID === equipID
+  );
+
+  const partits = dadesApp.partits
+    .filter(p =>
+      p.EquipA_ID === equipID ||
+      p.EquipB_ID === equipID
+    )
+    .sort((a, b) =>
+      `${a.Data} ${a.Hora}`.localeCompare(
+        `${b.Data} ${b.Hora}`
+      )
+    );
+
+  const partitsHTML = partits.map(partit => {
+    const esEquipA = partit.EquipA_ID === equipID;
+
+    const rivalID = esEquipA
+      ? partit.EquipB_ID
+      : partit.EquipA_ID;
+
+    const rival = dadesApp.equips.find(
+      e => e.EquipID === rivalID
+    );
+
+    const nomRival = rival?.NomCurt || rivalID;
+
+    const finalitzat =
+      partit.Estat === "Finalitzat" &&
+      partit.PuntsA !== "" &&
+      partit.PuntsB !== "" &&
+      partit.PuntsA != null &&
+      partit.PuntsB != null;
+
+    const resultat = finalitzat
+      ? `${partit.PuntsA} - ${partit.PuntsB}`
+      : "Pendent";
+
+    return `
+      <div class="card">
+        <h3>${esEquipA ? "vs" : "vs"} ${nomRival}</h3>
+        <p>${formatData(partit.Data)} · ${partit.Hora || "Hora pendent"}</p>
+        <p>${finalitzat ? "Resultat: " + resultat : "Partit programat"}</p>
+      </div>
+    `;
+  }).join("");
+
+  document.getElementById("contingut").innerHTML = `
+    <button class="card" onclick="mostrarEquips()">
+      ← Tornar a equips
+    </button>
+
+    <div class="fitxa-equip-capcalera">
+      <img
+        src="./${equip.Logo}"
+        alt="Escut de ${equip.NomCurt || equip.Nom}"
+      >
+      <h2>${equip.NomCurt || equip.Nom}</h2>
+      <p>${equip.Ciutat || ""}</p>
+    </div>
+
+    <h2>Estadístiques</h2>
+    <div class="card">
+      <p>Posició: ${estadistiques?.POS || "–"}</p>
+      <p>Partits jugats: ${estadistiques?.PJ ?? 0}</p>
+      <p>Victòries: ${estadistiques?.V ?? 0}</p>
+      <p>Empats: ${estadistiques?.E ?? 0}</p>
+      <p>Derrotes: ${estadistiques?.D ?? 0}</p>
+      <p>Punts a favor: ${estadistiques?.PF ?? 0}</p>
+      <p>Punts en contra: ${estadistiques?.PC ?? 0}</p>
+      <p>Diferència: ${estadistiques?.DIF ?? 0}</p>
+    </div>
+
+    <h2>Calendari i resultats</h2>
+    ${partitsHTML || '<p>Encara no hi ha partits.</p>'}
+  `;
 }

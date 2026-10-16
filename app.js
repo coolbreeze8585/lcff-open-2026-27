@@ -405,15 +405,20 @@ function mostrarEquips() {
   );
 
   const targetes = equips.map(equip => `
-    <div class="targeta-equip">
+    <button   
+      type="button"
+      class="targeta-equip"
+      onclick="mostrarFitxaEquip('${equip.EquipID}')"
+    >
       <img
         src="./${equip.Logo}"
         alt="Escut de ${equip.NomCurt || equip.Nom}"
         loading="lazy"
       >
       <span>${equip.NomCurt || equip.Nom}</span>
-    </div>
-  `).join("");
+  </button>
+`).join("");
+
 
   document.getElementById("contingut").innerHTML = `
     <h2>Equips</h2>

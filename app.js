@@ -394,3 +394,31 @@ function mostrarClassificacio() {
 
   document.getElementById("contingut").innerHTML = contingut;
 }
+
+
+function mostrarEquips() {
+  const equips = [...dadesApp.equips].sort((a, b) =>
+    (a.NomCurt || a.Nom).localeCompare(
+      b.NomCurt || b.Nom,
+      "ca"
+    )
+  );
+
+  const targetes = equips.map(equip => `
+    <div class="targeta-equip">
+      <img
+        src="./${equip.Logo}"
+        alt="Escut de ${equip.NomCurt || equip.Nom}"
+        loading="lazy"
+      >
+      <span>${equip.NomCurt || equip.Nom}</span>
+    </div>
+  `).join("");
+
+  document.getElementById("contingut").innerHTML = `
+    <h2>Equips</h2>
+    <div class="graella-equips">
+      ${targetes}
+    </div>
+  `;
+}

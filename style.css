@@ -313,3 +313,42 @@ button.targeta-equip:hover {
   background: var(--targeta-hover);
   border-color: var(--accent);
 }
+
+/* FITXA INDIVIDUAL D'EQUIP */
+
+.fitxa-equip-capcalera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  padding: 24px 16px;
+  background: var(--targeta);
+  border: 1px solid var(--vora);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.fitxa-equip-capcalera img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.fitxa-equip-capcalera h2 {
+  margin: 0;
+}
+
+.fitxa-equip-capcalera p {
+  margin: 0;
+  color: var(--text-secundari);
+}
+
+@media (max-width: 600px) {
+  .fitxa-equip-capcalera img {
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -253,3 +253,49 @@ nav button.actiu {
   object-fit: contain;
   flex-shrink: 0;
 }
+
+/* PESTANYA EQUIPS */
+
+.graella-equips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+.targeta-equip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 160px;
+  padding: 18px 12px;
+  background: var(--targeta);
+  border: 1px solid var(--vora);
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.targeta-equip img {
+  width: 85px;
+  height: 85px;
+  object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .graella-equips {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .targeta-equip {
+    min-height: 140px;
+    padding: 12px 8px;
+  }
+
+  .targeta-equip img {
+    width: 70px;
+    height: 70px;
+  }
+}

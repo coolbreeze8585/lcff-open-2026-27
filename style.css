@@ -299,3 +299,17 @@ nav button.actiu {
     height: 70px;
   }
 }
+
+/* TARGETES D'EQUIP CLICABLES */
+
+button.targeta-equip {
+  width: 100%;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+button.targeta-equip:hover {
+  background: var(--targeta-hover);
+  border-color: var(--accent);
+}

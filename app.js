@@ -422,3 +422,16 @@ function mostrarEquips() {
     </div>
   `;
 }
+
+function activarPestanya(pestanya) {
+  document.querySelectorAll(".menu-principal button")
+    .forEach(boto => boto.classList.remove("menu-actiu"));
+
+  const botoActiu = document.getElementById(
+    `btn-${pestanya}`
+  );
+
+  if (botoActiu) {
+    botoActiu.classList.add("menu-actiu");
+  }
+}

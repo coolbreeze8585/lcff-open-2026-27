@@ -345,7 +345,17 @@ function mostrarClassificacio() {
   const files = equips.map(equip => `
     <tr>
       <td>${equip.POS || "–"}</td>
-      <td>${equip.NomCurt || equip.Nom}</td>
+      <td>
+        <div class="equip-classificacio">
+          <img
+            src="./${equip.Logo}"
+            alt="Escut de ${equip.NomCurt || equip.Nom}"
+            class="escut-classificacio"
+            loading="lazy"
+          >    
+          <span>${equip.NomCurt || equip.Nom}</span>
+        </div>      
+      </td>
       <td>${equip.PJ}</td>
       <td>${equip.V}</td>
       <td>${equip.E}</td>

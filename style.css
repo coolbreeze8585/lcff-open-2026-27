@@ -238,3 +238,18 @@ nav button.actiu {
 .menu-principal button:not(:disabled):hover {
   background: #345a91;
 }
+
+/* ESCUTS A LA CLASSIFICACIÓ */
+
+.equip-classificacio {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.escut-classificacio {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+}

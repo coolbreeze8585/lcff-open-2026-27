@@ -352,3 +352,18 @@ button.targeta-equip:hover {
     height: 100px;
   }
 }
+
+
+/* ZONES DE CLASSIFICACIÓ */
+
+.taula-classificacio tr.zona-or td:first-child {
+  border-left: 5px solid #23734b;
+}
+
+.taula-classificacio tr.zona-intermedia td:first-child {
+  border-left: 5px solid #c28c30;
+}
+
+.taula-classificacio tr.zona-inferior td:first-child {
+  border-left: 5px solid #a64a4a;
+}

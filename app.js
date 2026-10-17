@@ -342,7 +342,17 @@ document.addEventListener(
 function mostrarClassificacio() {
   const equips = dadesApp.classificacio;
 
-  const files = equips.map(equip => `
+    const files = equips.map(equip => {
+      let zona = "";
+      if (equip.POS >= 1 && equip.POS <= 6) {
+        zona = "zona-or";
+      } else if (equip.POS >= 7 && equip.POS <= 11) {
+        zona = "zona-intermedia";
+      } else if (equip.POS >= 12 && equip.POS <= 16) {
+        zona = "zona-inferior";
+      }
+      return `
+
     <tr>
       <td>${equip.POS || "–"}</td>
       <td>

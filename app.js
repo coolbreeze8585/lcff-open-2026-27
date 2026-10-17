@@ -1,5 +1,5 @@
 
-/*
+/**
  * LCFF OPEN 2026-27
  * Aplicació pública de consulta
  */
@@ -16,10 +16,11 @@ const dadesApp = {
   classificacio: []
 };
 
+
 /**
  * Consulta una taula de l'API.
  */
-async function consultarAPI(taula) {        
+async function consultarAPI(taula) {
   const url =
     API_URL + "?taula=" + encodeURIComponent(taula);
 
@@ -40,6 +41,7 @@ async function consultarAPI(taula) {
   return resultat.dades;
 }
 
+
 /**
  * Converteix una data YYYY-MM-DD a format català.
  * Evitem problemes de zona horària.
@@ -54,7 +56,6 @@ function formatData(dataISO) {
   }
 
   const [any, mes, dia] = parts.map(Number);
-
   const data = new Date(any, mes - 1, dia);
 
   return new Intl.DateTimeFormat("ca-ES", {
@@ -63,6 +64,7 @@ function formatData(dataISO) {
     year: "numeric"
   }).format(data);
 }
+
 
 /**
  * Mostra la llista de jornades.
@@ -95,10 +97,11 @@ function mostrarJornades() {
   jornadesOrdenades.forEach(jornada => {
     const targeta = document.createElement("button");
     targeta.type = "button";
+    targeta.className = "card";
+
     targeta.addEventListener("click", () => {
       mostrarSeus(jornada.JornadaID);
     });
-    targeta.className = "card";
 
     const fila = document.createElement("div");
     fila.className = "card-fila";
@@ -135,6 +138,7 @@ function mostrarJornades() {
   });
 }
 
+
 /**
  * Mostra un missatge d'estat.
  */
@@ -154,8 +158,13 @@ function mostrarEstat(missatge, esError = false) {
 }
 
 
+/**
+ * Mostra les seus d'una jornada.
+ */
 function mostrarSeus(jornadaID) {
-  const contenidor = document.getElementById("contingut");
+  const contenidor =
+    document.getElementById("contingut");
+
   const jornada = dadesApp.jornades.find(
     j => j.JornadaID === jornadaID
   );
@@ -165,6 +174,7 @@ function mostrarSeus(jornadaID) {
   contenidor.replaceChildren();
 
   const tornar = document.createElement("button");
+  tornar.type = "button";
   tornar.textContent = "← Tornar a jornades";
   tornar.className = "card";
   tornar.addEventListener("click", mostrarJornades);
@@ -176,7 +186,9 @@ function mostrarSeus(jornadaID) {
 
   const seus = dadesApp.seus
     .filter(seu => seu.JornadaID === jornadaID)
-    .sort((a, b) => a.Data.localeCompare(b.Data));
+    .sort((a, b) =>
+      String(a.Data).localeCompare(String(b.Data))
+    );
 
   if (seus.length === 0) {
     const avis = document.createElement("p");
@@ -196,15 +208,14 @@ function mostrarSeus(jornadaID) {
       dataAnterior = seu.Data;
     }
 
-    
     const targeta = document.createElement("button");
     targeta.type = "button";
     targeta.className = "card";
-    
+
     targeta.addEventListener("click", () => {
       mostrarPartits(seu.SeuID);
     });
-    
+
     const nom = document.createElement("h3");
     nom.textContent = seu.NomSeu;
 
@@ -218,9 +229,16 @@ function mostrarSeus(jornadaID) {
 }
 
 
+/**
+ * Mostra els partits d'una seu.
+ */
 function mostrarPartits(seuID) {
-  const contenidor = document.getElementById("contingut");
-  const seu = dadesApp.seus.find(s => s.SeuID === seuID);
+  const contenidor =
+    document.getElementById("contingut");
+
+  const seu = dadesApp.seus.find(
+    s => s.SeuID === seuID
+  );
 
   if (!contenidor || !seu) return;
 
@@ -230,9 +248,11 @@ function mostrarPartits(seuID) {
   tornar.type = "button";
   tornar.className = "card";
   tornar.textContent = "← Tornar a les seus";
+
   tornar.addEventListener("click", () => {
     mostrarSeus(seu.JornadaID);
   });
+
   contenidor.appendChild(tornar);
 
   const titol = document.createElement("h2");
@@ -242,12 +262,17 @@ function mostrarPartits(seuID) {
   const info = document.createElement("p");
   info.className = "estat";
   info.textContent =
-    formatData(seu.Data) + " · " + (seu.Camp || "Camp pendent");
+    formatData(seu.Data) +
+    " · " +
+    (seu.Camp || "Camp pendent");
+
   contenidor.appendChild(info);
 
   const partits = dadesApp.partits
     .filter(p => p.SeuID === seuID)
-    .sort((a, b) => String(a.Hora).localeCompare(String(b.Hora)));
+    .sort((a, b) =>
+      String(a.Hora).localeCompare(String(b.Hora))
+    );
 
   if (partits.length === 0) {
     const avis = document.createElement("p");
@@ -266,8 +291,11 @@ function mostrarPartits(seuID) {
       e => e.EquipID === partit.EquipB_ID
     );
 
-    const nomA = equipA?.NomCurt || partit.EquipA_ID;
-    const nomB = equipB?.NomCurt || partit.EquipB_ID;
+    const nomA =
+      equipA?.NomCurt || partit.EquipA_ID;
+
+    const nomB =
+      equipB?.NomCurt || partit.EquipB_ID;
 
     const targeta = document.createElement("div");
     targeta.className = "card";
@@ -292,7 +320,11 @@ function mostrarPartits(seuID) {
     ) {
       const marcador = document.createElement("p");
       marcador.textContent =
-        "Resultat: " + partit.PuntsA + " - " + partit.PuntsB;
+        "Resultat: " +
+        partit.PuntsA +
+        " - " +
+        partit.PuntsB;
+
       targeta.appendChild(marcador);
     }
 
@@ -300,34 +332,41 @@ function mostrarPartits(seuID) {
   });
 }
 
+
 /**
  * Inicialitza l'aplicació.
  */
 async function iniciarApp() {
-  mostrarEstat("Carregant jornades...");
+  mostrarEstat("Carregant dades...");
 
-  try {  
-    const [jornades, seus, partits, equips, classificacio] =
-      await Promise.all([
-        consultarAPI("Jornades"),
-        consultarAPI("Seus"),
-        consultarAPI("Partits"),
-        consultarAPI("Equips"),
-        consultarAPI("Classificacio")
-      ]);
-    
+  try {
+    const [
+      jornades,
+      seus,
+      partits,
+      equips,
+      classificacio
+    ] = await Promise.all([
+      consultarAPI("Jornades"),
+      consultarAPI("Seus"),
+      consultarAPI("Partits"),
+      consultarAPI("Equips"),
+      consultarAPI("Classificacio")
+    ]);
+
     dadesApp.jornades = jornades;
     dadesApp.seus = seus;
     dadesApp.partits = partits;
     dadesApp.equips = equips;
     dadesApp.classificacio = classificacio;
-    
+
     mostrarClassificacio();
-      } catch (error) {
-    
+
+  } catch (error) {
     console.error(error);
+
     mostrarEstat(
-      "No s'han pogut carregar les jornades.",
+      "No s'han pogut carregar les dades.",
       true
     );
   }
@@ -339,45 +378,60 @@ document.addEventListener(
 );
 
 
+/**
+ * Mostra la classificació.
+ *
+ * Zones:
+ * 1-6   Grup Or
+ * 7-11  Grup intermedi
+ * 12-16 Grup inferior
+ *
+ * Sense posició: cap zona assignada.
+ */
 function mostrarClassificacio() {
   const equips = dadesApp.classificacio;
 
-    const files = equips.map(equip => {
-      let zona = "";
-      if (equip.POS >= 1 && equip.POS <= 6) {
-        zona = "zona-or";
-      } else if (equip.POS >= 7 && equip.POS <= 11) {
-        zona = "zona-intermedia";
-      } else if (equip.POS >= 12 && equip.POS <= 16) {
-        zona = "zona-inferior";
-      }
-      return `
+  const files = equips.map(equip => {
+    const posicio = Number(equip.POS) || 0;
 
-    <tr>
-      <td>${equip.POS || "–"}</td>
-      <td>
-        <div class="equip-classificacio">
-          <img
-            src="./${equip.Logo}"
-            alt="Escut de ${equip.NomCurt || equip.Nom}"
-            class="escut-classificacio"
-            loading="lazy"
-          >    
-          <span>${equip.NomCurt || equip.Nom}</span>
-        </div>      
-      </td>
-      <td>${equip.PJ}</td>
-      <td>${equip.V}</td>
-      <td>${equip.E}</td>
-      <td>${equip.D}</td>
-      <td>${equip.PF}</td>
-      <td>${equip.PC}</td>
-      <td>${equip.DIF > 0 ? "+" : ""}${equip.DIF}</td>
-    </tr>
-  `).join("");
+    let zona = "";
+
+    if (posicio >= 1 && posicio <= 6) {
+      zona = "zona-or";
+    } else if (posicio >= 7 && posicio <= 11) {
+      zona = "zona-intermedia";
+    } else if (posicio >= 12 && posicio <= 16) {
+      zona = "zona-inferior";
+    }
+
+    return `
+      <tr class="${zona}">
+        <td>${posicio || "–"}</td>
+        <td>
+          <div class="equip-classificacio">
+            <img
+              src="./${equip.Logo}"
+              alt="Escut de ${equip.NomCurt || equip.Nom}"
+              class="escut-classificacio"
+              loading="lazy"
+            >
+            <span>${equip.NomCurt || equip.Nom}</span>
+          </div>
+        </td>
+        <td>${equip.PJ}</td>
+        <td>${equip.V}</td>
+        <td>${equip.E}</td>
+        <td>${equip.D}</td>
+        <td>${equip.PF}</td>
+        <td>${equip.PC}</td>
+        <td>${equip.DIF > 0 ? "+" : ""}${equip.DIF}</td>
+      </tr>
+    `;
+  }).join("");
 
   const contingut = `
     <h2>Classificació</h2>
+
     <div style="overflow-x: auto;">
       <table class="taula-classificacio">
         <thead>
@@ -393,19 +447,27 @@ function mostrarClassificacio() {
             <th>DIF</th>
           </tr>
         </thead>
-        <tbody>${files}</tbody>
+
+        <tbody>
+          ${files}
+        </tbody>
       </table>
     </div>
+
     <p class="nota-classificacio">
       Classificació provisional.
       Els desempats federatius es resoldran manualment.
     </p>
   `;
 
-  document.getElementById("contingut").innerHTML = contingut;
+  document.getElementById("contingut").innerHTML =
+    contingut;
 }
 
 
+/**
+ * Mostra la graella d'equips.
+ */
 function mostrarEquips() {
   const equips = [...dadesApp.equips].sort((a, b) =>
     (a.NomCurt || a.Nom).localeCompare(
@@ -415,7 +477,7 @@ function mostrarEquips() {
   );
 
   const targetes = equips.map(equip => `
-    <button   
+    <button
       type="button"
       class="targeta-equip"
       onclick="mostrarFitxaEquip('${equip.EquipID}')"
@@ -426,21 +488,28 @@ function mostrarEquips() {
         loading="lazy"
       >
       <span>${equip.NomCurt || equip.Nom}</span>
-  </button>
-`).join("");
-
+    </button>
+  `).join("");
 
   document.getElementById("contingut").innerHTML = `
     <h2>Equips</h2>
+
     <div class="graella-equips">
       ${targetes}
     </div>
   `;
 }
 
+
+/**
+ * Ressalta la pestanya activa.
+ */
 function activarPestanya(pestanya) {
-  document.querySelectorAll(".menu-principal button")
-    .forEach(boto => boto.classList.remove("menu-actiu"));
+  document.querySelectorAll(
+    ".menu-principal button"
+  ).forEach(boto => {
+    boto.classList.remove("menu-actiu");
+  });
 
   const botoActiu = document.getElementById(
     `btn-${pestanya}`
@@ -451,6 +520,10 @@ function activarPestanya(pestanya) {
   }
 }
 
+
+/**
+ * Mostra la fitxa individual d'un equip.
+ */
 function mostrarFitxaEquip(equipID) {
   const equip = dadesApp.equips.find(
     e => e.EquipID === equipID
@@ -477,7 +550,8 @@ function mostrarFitxaEquip(equipID) {
     );
 
   const partitsHTML = partits.map(partit => {
-    const esEquipA = partit.EquipA_ID === equipID;
+    const esEquipA =
+      partit.EquipA_ID === equipID;
 
     const rivalID = esEquipA
       ? partit.EquipB_ID
@@ -487,7 +561,8 @@ function mostrarFitxaEquip(equipID) {
       e => e.EquipID === rivalID
     );
 
-    const nomRival = rival?.NomCurt || rivalID;
+    const nomRival =
+      rival?.NomCurt || rivalID;
 
     const finalitzat =
       partit.Estat === "Finalitzat" &&
@@ -502,15 +577,30 @@ function mostrarFitxaEquip(equipID) {
 
     return `
       <div class="card">
-        <h3>${esEquipA ? "vs" : "vs"} ${nomRival}</h3>
-        <p>${formatData(partit.Data)} · ${partit.Hora || "Hora pendent"}</p>
-        <p>${finalitzat ? "Resultat: " + resultat : "Partit programat"}</p>
+        <h3>vs ${nomRival}</h3>
+
+        <p>
+          ${formatData(partit.Data)}
+          · ${partit.Hora || "Hora pendent"}
+        </p>
+
+        <p>
+          ${
+            finalitzat
+              ? "Resultat: " + resultat
+              : "Partit programat"
+          }
+        </p>
       </div>
     `;
   }).join("");
 
   document.getElementById("contingut").innerHTML = `
-    <button class="card" onclick="mostrarEquips()">
+    <button
+      type="button"
+      class="card"
+      onclick="mostrarEquips()"
+    >
       ← Tornar a equips
     </button>
 
@@ -519,11 +609,13 @@ function mostrarFitxaEquip(equipID) {
         src="./${equip.Logo}"
         alt="Escut de ${equip.NomCurt || equip.Nom}"
       >
+
       <h2>${equip.NomCurt || equip.Nom}</h2>
       <p>${equip.Ciutat || ""}</p>
     </div>
 
     <h2>Estadístiques</h2>
+
     <div class="card">
       <p>Posició: ${estadistiques?.POS || "–"}</p>
       <p>Partits jugats: ${estadistiques?.PJ ?? 0}</p>
@@ -536,6 +628,10 @@ function mostrarFitxaEquip(equipID) {
     </div>
 
     <h2>Calendari i resultats</h2>
-    ${partitsHTML || '<p>Encara no hi ha partits.</p>'}
+
+    ${
+      partitsHTML ||
+      '<p>Encara no hi ha partits.</p>'
+    }
   `;
 }

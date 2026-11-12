@@ -1,22 +1,16 @@
-
-/* LCFF OPEN 2026-27 */
-/* Estils generals de la PWA */
-
+/* LCFF OPEN 2026-27 — Tema negre, vermell i blanc */
 :root {
-  --fons: #101827;
-  --capcalera: #17243a;
-  --targeta: #1e2d45;
-  --targeta-hover: #293c59;
-  --text: #ffffff;
-  --text-secundari: #b9c7db;
-  --accent: #60a5fa;
-  --vora: #34465f;
+  color-scheme: dark;
+  --fons: #101115;
+  --capcalera: #17181e;
+  --targeta: #1d1f27;
+  --targeta-hover: #292c36;
+  --text: #f8f9fb;
+  --text-secundari: #b6b8c2;
+  --accent: #ed424b;
+  --vora: #383b46;
 }
-
-* {
-  box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
   margin: 0;
   min-height: 100vh;
@@ -24,34 +18,17 @@ body {
   background: var(--fons);
   color: var(--text);
 }
-
 header {
-  padding: 24px 16px;
-  background: var(--capcalera);
+  padding: 30px 16px 26px;
+  background: linear-gradient(135deg, #20212a 0%, #14151b 72%);
+  border-bottom: 3px solid #c52a34;
   text-align: center;
 }
-
-header h1 {
-  margin: 0;
-  font-size: 26px;
-}
-
-header p {
-  margin-bottom: 0;
-  color: var(--text-secundari);
-}
-
-main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 24px 16px 90px;
-}
-
-h2 {
-  margin: 0 0 20px;
-  font-size: 23px;
-}
-
+header h1 { margin: 0; font-size: clamp(24px, 4vw, 34px); font-weight: 800; letter-spacing: .025em; text-transform: uppercase; }
+header p { margin: 9px 0 0; color: var(--text-secundari); }
+main { max-width: 900px; margin: 0 auto; padding: 14px 16px 72px; }
+h2 { margin: 0 0 20px; font-size: 23px; }
+h2::after { content: ''; display: block; width: 46px; height: 3px; margin-top: 9px; background: var(--accent); border-radius: 3px; }
 .card {
   display: block;
   width: 100%;
@@ -62,206 +39,80 @@ h2 {
   border-radius: 12px;
   color: var(--text);
   text-align: left;
+  box-shadow: 0 3px 12px #00000020;
 }
-
-button.card {
-  cursor: pointer;
-  font: inherit;
-}
-
-button.card:hover {
-  background: var(--targeta-hover);
-}
-
-.card h3 {
-  margin: 0 0 8px;
-  font-size: 19px;
-}
-
-.card p {
-  margin: 0;
-  color: var(--text-secundari);
-}
-
-.card-fila {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-}
-
-.card-fletxa {
-  color: var(--accent);
-  font-size: 24px;
-}
-
-.estat {
-  padding: 20px;
-  text-align: center;
-  color: var(--text-secundari);
-}
-
-.error {
-  color: #fca5a5;
-}
-
-.ocult {
-  display: none !important;
-}
-
-/* Navegació inferior */
-
-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 8px;
-  background: var(--capcalera);
-  border-top: 1px solid var(--vora);
-}
-
-nav button {
-  flex: 1;
-  padding: 12px 4px;
-  background: transparent;
-  border: none;
-  color: var(--text-secundari);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-nav button.actiu {
-  color: var(--accent);
-  font-weight: bold;
-}
-
-/* Adaptació a mòbils */
-
-@media (max-width: 600px) {
-  header h1 {
-    font-size: 22px;
-  }
-
-  main {
-    padding: 18px 12px 90px;
-  }
-
-  .card {
-    padding: 16px;
-  }
-
-  .card h3 {
-    font-size: 17px;
-  }
-}
-
-/* CLASSIFICACIÓ */
-
-.taula-classificacio {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 580px;
-  font-size: 0.9rem;
-}
-
-.taula-classificacio th,
-.taula-classificacio td {
-  padding: 12px 10px;
-  text-align: center;
-  border-bottom: 1px solid #29384f;
-}
-
-.taula-classificacio th {
-  background: #1b2b44;
-  color: #c8d8ef;
-  font-weight: 700;
-}
-
-.taula-classificacio td:nth-child(2),
-.taula-classificacio th:nth-child(2) {
-  text-align: left;
-  min-width: 130px;
-}
-
-.taula-classificacio tbody tr:hover {
-  background: #1b2b44;
-}
-
-.nota-classificacio {
-  margin-top: 20px;
-  font-size: 0.8rem;
-  color: #aabbd0;
-  line-height: 1.5;
-}
-
-/* MENÚ PRINCIPAL: sota la capçalera */
-
+button.card { cursor: pointer; font: inherit; }
+button.card:hover { background: var(--targeta-hover); border-color: #9c333c; }
+.card h3 { margin: 0 0 8px; font-size: 19px; }
+.card p { margin: 0; color: var(--text-secundari); }
+.card-fila { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.card-fletxa { color: var(--accent); font-size: 24px; }
+.estat { padding: 20px; text-align: center; color: var(--text-secundari); }
+.error { color: #ff858b; }
+.ocult { display: none !important; }
+/* Menú superior: quatre pestanyes */
 .menu-principal {
   position: static;
   width: 100%;
   max-width: 900px;
-  margin: 16px auto 20px;
+  margin: 18px auto 20px;
   padding: 0 16px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   background: transparent;
+  border: 0;
   box-shadow: none;
 }
-
 .menu-principal button {
   position: static;
   width: 100%;
+  min-width: 0;
   padding: 13px 8px;
-  border: 1px solid #314563;
-  border-radius: 6px;
-  background: #1d2e49;
-  color: #ffffff;
-  font-size: 0.95rem;
-  font-weight: 600;
+  border: 1px solid var(--vora);
+  border-radius: 8px;
+  background: #22242d;
+  color: var(--text);
+  font-size: .95rem;
+  font-weight: 700;
   cursor: pointer;
+  transition: background .15s, border-color .15s;
 }
-
 .menu-principal button.menu-actiu {
-  background: #345a91;
-  border-color: #527cb6;
+  background: #bc2731;
+  border-color: #ef4b55;
+  color: #fff;
 }
-
-.menu-principal button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+.menu-principal button:disabled { opacity: .55; cursor: not-allowed; }
+.menu-principal button:not(:disabled):hover { background: #96303a; border-color: #d74a55; }
+.menu-principal button:focus-visible, button.card:focus-visible, button.targeta-equip:focus-visible {
+  outline: 3px solid #ff747d;
+  outline-offset: 3px;
 }
-
-.menu-principal button:not(:disabled):hover {
-  background: #345a91;
+/* Classificació */
+.taula-classificacio {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 580px;
+  font-size: .9rem;
 }
-
-/* ESCUTS A LA CLASSIFICACIÓ */
-
-.equip-classificacio {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.taula-classificacio th, .taula-classificacio td {
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 1px solid var(--vora);
 }
-
-.escut-classificacio {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-/* PESTANYA EQUIPS */
-
-.graella-equips {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 14px;
-}
-
+.taula-classificacio th { background: #272932; color: #e5e6eb; font-weight: 700; }
+.taula-classificacio td:nth-child(2), .taula-classificacio th:nth-child(2) { text-align: left; min-width: 130px; }
+.taula-classificacio tbody tr:hover { background: #262831; }
+.nota-classificacio { margin-top: 20px; font-size: .8rem; color: var(--text-secundari); line-height: 1.5; }
+.equip-classificacio { display: flex; align-items: center; gap: 12px; }
+.escut-classificacio { width: 36px; height: 36px; object-fit: contain; flex-shrink: 0; }
+/* Zones competitives: conserven codificació independent */
+.taula-classificacio tr.zona-or td:first-child { border-left: 5px solid #3ba875; }
+.taula-classificacio tr.zona-intermedia td:first-child { border-left: 5px solid #dba444; }
+.taula-classificacio tr.zona-inferior td:first-child { border-left: 5px solid #d65760; }
+/* Equips */
+.graella-equips { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
 .targeta-equip {
   display: flex;
   flex-direction: column;
@@ -276,46 +127,10 @@ nav button.actiu {
   text-align: center;
   font-weight: 600;
 }
-
-.targeta-equip img {
-  width: 85px;
-  height: 85px;
-  object-fit: contain;
-}
-
-@media (max-width: 600px) {
-  .graella-equips {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .targeta-equip {
-    min-height: 140px;
-    padding: 12px 8px;
-  }
-
-  .targeta-equip img {
-    width: 70px;
-    height: 70px;
-  }
-}
-
-/* TARGETES D'EQUIP CLICABLES */
-
-button.targeta-equip {
-  width: 100%;
-  color: var(--text);
-  font: inherit;
-  cursor: pointer;
-}
-
-button.targeta-equip:hover {
-  background: var(--targeta-hover);
-  border-color: var(--accent);
-}
-
-/* FITXA INDIVIDUAL D'EQUIP */
-
+.targeta-equip img { width: 85px; height: 85px; object-fit: contain; }
+button.targeta-equip { width: 100%; color: var(--text); font: inherit; cursor: pointer; }
+button.targeta-equip:hover { background: var(--targeta-hover); border-color: var(--accent); }
+/* Fitxa individual d'equip */
 .fitxa-equip-capcalera {
   display: flex;
   flex-direction: column;
@@ -328,42 +143,19 @@ button.targeta-equip:hover {
   border-radius: 12px;
   text-align: center;
 }
-
-.fitxa-equip-capcalera img {
-  display: block;
-  width: 120px;
-  height: 120px;
-  max-width: 100%;
-  object-fit: contain;
-}
-
-.fitxa-equip-capcalera h2 {
-  margin: 0;
-}
-
-.fitxa-equip-capcalera p {
-  margin: 0;
-  color: var(--text-secundari);
-}
-
+.fitxa-equip-capcalera img { display: block; width: 120px; height: 120px; max-width: 100%; object-fit: contain; }
+.fitxa-equip-capcalera h2 { margin: 0; }
+.fitxa-equip-capcalera h2::after { display: none; }
+.fitxa-equip-capcalera p { margin: 0; color: var(--text-secundari); }
 @media (max-width: 600px) {
-  .fitxa-equip-capcalera img {
-    width: 100px;
-    height: 100px;
-  }
-}
-
-
-/* ZONES DE CLASSIFICACIÓ */
-
-.taula-classificacio tr.zona-or td:first-child {
-  border-left: 5px solid #23734b;
-}
-
-.taula-classificacio tr.zona-intermedia td:first-child {
-  border-left: 5px solid #c28c30;
-}
-
-.taula-classificacio tr.zona-inferior td:first-child {
-  border-left: 5px solid #a64a4a;
+  header h1 { font-size: 22px; }
+  main { padding: 12px 12px 70px; }
+  .card { padding: 16px; }
+  .card h3 { font-size: 17px; }
+  .menu-principal { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0 12px; margin: 14px auto 16px; }
+  .menu-principal button { padding: 12px 5px; font-size: .9rem; }
+  .graella-equips { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .targeta-equip { min-height: 140px; padding: 12px 8px; }
+  .targeta-equip img { width: 70px; height: 70px; }
+  .fitxa-equip-capcalera img { width: 100px; height: 100px; }
 }

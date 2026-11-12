@@ -712,7 +712,7 @@ function mostrarPlayoffs() {
 
   const graella = document.createElement("div");
   graella.style.display = "grid";
-  graella.style.gridTemplateColumns = "repeat(auto-fit, minmax(min(100%, 260px), 1fr))";
+  graella.style.gridTemplateColumns = "repeat(auto-fit, minmax(min(100%, 400px), 1fr))";
   graella.style.gap = "12px";
 
   for (const grup of grups) {

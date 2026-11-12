@@ -781,16 +781,28 @@ function mostrarPlayoffs() {
     resum.style.fontWeight = "bold";
     detall.appendChild(resum);
 
-    for (const bloc of jornada.blocs) {
-      const cap = document.createElement("h4");
-      cap.textContent = bloc.nom;
-      detall.appendChild(cap);
-      for (const [a, b] of bloc.partits) {
-        const fila = document.createElement("p");
-        fila.textContent = `${nomPosicio(a)} (${a}è) vs ${nomPosicio(b)} (${b}è)`;
-        detall.appendChild(fila);
-      }
-    }
+   const graellaPartits = document.createElement("div");
+graellaPartits.className = "graella-partits-playoffs";
+
+for (const bloc of jornada.blocs) {
+  const columna = document.createElement("section");
+  columna.className = "bloc-partits-playoffs";
+
+  const cap = document.createElement("h4");
+  cap.textContent = bloc.nom;
+  columna.appendChild(cap);
+
+  for (const [a, b] of bloc.partits) {
+    const fila = document.createElement("p");
+    fila.textContent =
+      `${nomPosicio(a)} (${a}è) vs ${nomPosicio(b)} (${b}è)`;
+    columna.appendChild(fila);
+  }
+
+  graellaPartits.appendChild(columna);
+}
+
+detall.appendChild(graellaPartits);
     contenidor.appendChild(detall);
   }
 

@@ -159,3 +159,73 @@ button.targeta-equip:hover { background: var(--targeta-hover); border-color: var
   .targeta-equip img { width: 70px; height: 70px; }
   .fitxa-equip-capcalera img { width: 100px; height: 100px; }
 }
+
+/* RETOCS VISUALS LCFF OPEN */
+
+/* Escuts més visibles */
+.escut-classificacio {
+  width: 44px;
+  height: 44px;
+}
+
+/* Transicions */
+.menu-principal button,
+button.card,
+button.targeta-equip {
+  transition: background-color 0.18s ease,
+              border-color 0.18s ease,
+              transform 0.18s ease;
+}
+
+@media (hover: hover) {
+  button.card:hover,
+  button.targeta-equip:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Targetes de grups dels playoffs */
+.graella-playoffs > .card {
+  border-top: 3px solid #c62828;
+}
+
+/* Desplegables dels playoffs */
+details.card > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+details.card > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.card > summary::after {
+  content: "⌄";
+  color: #ef4444;
+  font-size: 24px;
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+
+details.card[open] > summary::after {
+  transform: rotate(180deg);
+}
+
+/* Accessibilitat amb teclat */
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid #ff5b65;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-principal button,
+  button.card,
+  button.targeta-equip,
+  details.card > summary::after {
+    transition: none;
+  }
+}

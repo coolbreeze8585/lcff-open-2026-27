@@ -249,3 +249,33 @@ main > h2 {
 main > h2::after {
   display: none;
 }
+/* ENFRONTAMENTS PLAYOFFS EN DUES COLUMNES */
+
+.graella-partits-playoffs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.bloc-partits-playoffs {
+  min-width: 0;
+}
+
+.bloc-partits-playoffs h4 {
+  margin: 0 0 18px;
+  color: #ffffff;
+}
+
+.bloc-partits-playoffs p {
+  margin: 0 0 6px;
+  color: var(--text-secundari);
+  line-height: 1.4;
+}
+
+@media (max-width: 650px) {
+  .graella-partits-playoffs {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

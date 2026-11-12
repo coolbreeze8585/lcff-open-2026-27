@@ -570,15 +570,32 @@ function mostrarFitxaEquip(equipID) {
       partit.PuntsB !== "" &&
       partit.PuntsA != null &&
       partit.PuntsB != null;
+    
+    const puntsPropis = Number(
+  esEquipA ? partit.PuntsA : partit.PuntsB
+);
 
-    const resultat = finalitzat
-      ? `${partit.PuntsA} - ${partit.PuntsB}`
-      : "Pendent";
+const puntsRival = Number(
+  esEquipA ? partit.PuntsB : partit.PuntsA
+);
 
-    return `
-      <div class="card">
-        <h3>vs ${nomRival}</h3>
+const resultat = finalitzat
+  ? `${puntsPropis} - ${puntsRival}`
+  : "Pendent";
 
+const condicio = esEquipA ? "vs" : "@";
+
+const balanc = !finalitzat
+  ? ""
+  : puntsPropis > puntsRival
+    ? " · Victòria"
+    : puntsPropis < puntsRival
+      ? " · Derrota"
+      : " · Empat";
+
+return `
+  <div class="card">
+    <h3>${condicio} ${nomRival}</h3>    
         <p>
           ${formatData(partit.Data)}
           · ${partit.Hora || "Hora pendent"}
@@ -587,8 +604,8 @@ function mostrarFitxaEquip(equipID) {
         <p>
           ${
             finalitzat
-              ? "Resultat: " + resultat
-              : "Partit programat"
+              ? "Resultat: " + resultat + balanc
+            : "Partit programat"
           }
         </p>
       </div>

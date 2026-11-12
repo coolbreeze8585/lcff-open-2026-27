@@ -635,3 +635,159 @@ function mostrarFitxaEquip(equipID) {
     }
   `;
 }
+
+/**
+ * PLAYOFFS - projecció dinàmica segons la classificació actual.
+ * Les places són provisionals fins al tancament de la fase regular.
+ */
+function mostrarPlayoffs() {
+  const contenidor = document.getElementById("contingut");
+  if (!contenidor) return;
+  contenidor.replaceChildren();
+
+  const titol = document.createElement("h2");
+  titol.textContent = "Playoffs";
+  contenidor.appendChild(titol);
+
+  const avis = document.createElement("p");
+  avis.className = "nota-classificacio";
+  avis.textContent = "Projecció provisional segons la classificació actual. Les places poden canviar fins que acabi la fase regular; els desempats oficials encara no estan incorporats.";
+  contenidor.appendChild(avis);
+
+  const classificats = new Map();
+  for (const equip of dadesApp.classificacio) {
+    const pos = Number(equip.POS);
+    if (Number.isInteger(pos) && pos >= 1 && pos <= 16 && !classificats.has(pos)) {
+      classificats.set(pos, equip);
+    }
+  }
+
+  if (classificats.size !== 16) {
+    const alerta = document.createElement("p");
+    alerta.className = "estat";
+    alerta.textContent = `Hi ha ${classificats.size} de 16 posicions disponibles. Les places que falten es mostraran com a pendents.`;
+    contenidor.appendChild(alerta);
+  }
+
+  const grups = [
+    { nom: "Títol A", posicions: [1, 4, 5] },
+    { nom: "Títol B", posicions: [2, 3, 6] },
+    { nom: "Títol / permanència", posicions: [7, 8, 9, 10, 11] },
+    { nom: "Permanència", posicions: [12, 13, 14, 15, 16] }
+  ];
+
+  const crearEquip = pos => {
+    const equip = classificats.get(pos);
+    const fila = document.createElement("div");
+    fila.className = "equip-classificacio";
+    fila.style.padding = "7px 0";
+    fila.style.gap = "10px";
+
+    const numero = document.createElement("strong");
+    numero.textContent = `${pos}è`;
+    numero.style.minWidth = "2.5em";
+    fila.appendChild(numero);
+
+    if (equip) {
+      const logo = equip.Logo || dadesApp.equips.find(e => e.EquipID === equip.EquipID)?.Logo;
+      if (logo) {
+        const img = document.createElement("img");
+        img.src = `./${logo}`;
+        img.alt = "";
+        img.loading = "lazy";
+        img.className = "escut-classificacio";
+        fila.appendChild(img);
+      }
+    }
+
+    const nom = document.createElement("span");
+    nom.textContent = equip ? (equip.NomCurt || equip.Nom || equip.EquipID) : "Equip pendent";
+    fila.appendChild(nom);
+    return fila;
+  };
+
+  const subtitol = document.createElement("h3");
+  subtitol.textContent = "Grups segons la classificació";
+  contenidor.appendChild(subtitol);
+
+  const graella = document.createElement("div");
+  graella.style.display = "grid";
+  graella.style.gridTemplateColumns = "repeat(auto-fit, minmax(min(100%, 260px), 1fr))";
+  graella.style.gap = "12px";
+
+  for (const grup of grups) {
+    const targeta = document.createElement("section");
+    targeta.className = "card";
+    const cap = document.createElement("h3");
+    cap.textContent = grup.nom;
+    targeta.appendChild(cap);
+    grup.posicions.forEach(pos => targeta.appendChild(crearEquip(pos)));
+    graella.appendChild(targeta);
+  }
+  contenidor.appendChild(graella);
+
+  const calendariTitol = document.createElement("h3");
+  calendariTitol.textContent = "Enfrontaments previstos";
+  contenidor.appendChild(calendariTitol);
+
+  const jornadesPlayoff = [
+    {
+      nom: "PO-J1 · 17–18 d’abril de 2027",
+      blocs: [
+        { nom: "Permanència", partits: [[12,14],[13,15],[16,12],[14,13],[15,16]] },
+        { nom: "Títol / permanència", partits: [[7,8],[10,11],[9,7],[8,10],[11,9]] }
+      ]
+    },
+    {
+      nom: "PO-J2 · 24–25 d’abril de 2027",
+      blocs: [
+        { nom: "Permanència", partits: [[13,12],[14,16],[16,13],[12,15],[15,14]] },
+        { nom: "Títol / permanència", partits: [[10,7],[8,9],[9,10],[7,11],[11,8]] },
+        { nom: "Títol A", partits: [[1,4],[4,5],[5,1]] },
+        { nom: "Títol B", partits: [[2,3],[3,6],[6,2]] }
+      ]
+    }
+  ];
+
+  const nomPosicio = pos => {
+    const equip = classificats.get(pos);
+    return equip ? (equip.NomCurt || equip.Nom || equip.EquipID) : `Posició ${pos}`;
+  };
+
+  for (const jornada of jornadesPlayoff) {
+    const detall = document.createElement("details");
+    detall.className = "card";
+    const resum = document.createElement("summary");
+    resum.textContent = jornada.nom;
+    resum.style.cursor = "pointer";
+    resum.style.fontWeight = "bold";
+    detall.appendChild(resum);
+
+    for (const bloc of jornada.blocs) {
+      const cap = document.createElement("h4");
+      cap.textContent = bloc.nom;
+      detall.appendChild(cap);
+      for (const [a, b] of bloc.partits) {
+        const fila = document.createElement("p");
+        fila.textContent = `${nomPosicio(a)} (${a}è) vs ${nomPosicio(b)} (${b}è)`;
+        detall.appendChild(fila);
+      }
+    }
+    contenidor.appendChild(detall);
+  }
+
+  const pendents = [
+    "PO-J3 · 8–9 de maig de 2027",
+    "Final Four · 29–30 de maig de 2027"
+  ];
+  for (const nom of pendents) {
+    const targeta = document.createElement("section");
+    targeta.className = "card";
+    const cap = document.createElement("h3");
+    cap.textContent = nom;
+    const info = document.createElement("p");
+    info.textContent = "Participants i enfrontaments pendents dels resultats de les fases anteriors.";
+    targeta.append(cap, info);
+    contenidor.appendChild(targeta);
+  }
+}

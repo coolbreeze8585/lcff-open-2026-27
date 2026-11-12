@@ -752,17 +752,17 @@ function mostrarPlayoffs() {
     {
       nom: "PO-J1 · 17–18 d’abril de 2027",
       blocs: [
-        { nom: "Permanència", partits: [[12,14],[13,15],[16,12],[14,13],[15,16]] },
-        { nom: "Títol / permanència", partits: [[7,8],[10,11],[9,7],[8,10],[11,9]] }
+        { nom: "Títol / permanència", partits: [[7,8],[10,11],[9,7],[8,10],[11,9]] },
+        { nom: "Permanència", partits: [[12,14],[13,15],[16,12],[14,13],[15,16]] }
       ]
     },
     {
       nom: "PO-J2 · 24–25 d’abril de 2027",
       blocs: [
-        { nom: "Permanència", partits: [[13,12],[14,16],[16,13],[12,15],[15,14]] },
-        { nom: "Títol / permanència", partits: [[10,7],[8,9],[9,10],[7,11],[11,8]] },
         { nom: "Títol A", partits: [[1,4],[4,5],[5,1]] },
-        { nom: "Títol B", partits: [[2,3],[3,6],[6,2]] }
+        { nom: "Títol B", partits: [[2,3],[3,6],[6,2]] },
+        { nom: "Títol / permanència", partits: [[10,7],[8,9],[9,10],[7,11],[11,8]] },
+        { nom: "Permanència", partits: [[13,12],[14,16],[16,13],[12,15],[15,14]] }        
       ]
     }
   ];

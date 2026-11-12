@@ -728,6 +728,7 @@ function mostrarPlayoffs() {
   contenidor.appendChild(subtitol);
 
   const graella = document.createElement("div");
+  graella.className = "graella-playoffs";
   graella.style.display = "grid";
   graella.style.gridTemplateColumns = "repeat(auto-fit, minmax(min(100%, 400px), 1fr))";
   graella.style.gap = "12px";
